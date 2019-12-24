@@ -21,6 +21,9 @@ from hiq.projectq.ops._gates import MetaSwapGate
 
 
 class FakeSimulator:
+    """
+    FakeSimulator used only for testing.
+    """
     def __init__(self):
         pass
 
@@ -29,7 +32,20 @@ class FakeSimulator:
 
 
 class DummyBackend(BasicEngine):
+    """
+    DummyBackend used for testing.
+    It keeps tracks of
+      - number of gates and swaps,
+      - number of matrix-vector multiplications, etc. 
+    and prints the final statistics.
+    """
     def __init__(self, cluster_size, num_global):
+        """
+        Args:
+            cluster_size (int): The maximum number of qubits in fused
+                                multi-qubit gate
+            num_global (int): Number of global qubits
+        """
         BasicEngine.__init__(self)
 
         self._num_global = num_global
@@ -191,6 +207,9 @@ class DummyBackend(BasicEngine):
         return i in self.get_global_qubits_ids()
 
     def print_statistics(self):
+        """
+        Prints the final values of counters.
+        """
         print("==================== STATS ====================")
         print("Gates:", self._gates)
         print("Swaps:", self._swaps)
